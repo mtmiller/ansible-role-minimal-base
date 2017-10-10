@@ -16,7 +16,7 @@ This is an example playbook showing how to use this role.
 
     - hosts: servers
       roles:
-         - mtmiller.minimal-base
+        - mtmiller.minimal-base
 
 ## License
 
