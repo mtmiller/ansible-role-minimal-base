@@ -1,0 +1,12 @@
+---
+minimal_base_install_packages:
+  - openssh-server
+
+minimal_base_uninstall_packages:
+  - at
+  - bind9-host
+  - dnsutils
+  - exim4-base
+  - exim4-config
+  - nfs-common
+  - rpcbind

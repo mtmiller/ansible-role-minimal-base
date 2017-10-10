@@ -1,0 +1,15 @@
+---
+- name: uninstall packages unnecessary for a minimal base
+  apt:
+    name: '{{ item }}'
+    state: absent
+    purge: yes
+    autoremove: yes
+  with_items: '{{ minimal_base_uninstall_packages + minimal_base_uninstall_packages_extra }}'
+
+- name: install packages for a minimal base
+  apt:
+    name: '{{ item }}'
+    state: latest
+    update_cache: yes
+  with_items: '{{ minimal_base_install_packages + minimal_base_install_packages_extra }}'

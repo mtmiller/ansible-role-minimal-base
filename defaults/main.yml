@@ -1,0 +1,7 @@
+---
+
+# List of packages to install as part of a minimal base system
+minimal_base_install_packages_extra: []
+
+# List of packages to uninstall as part of a minimal base system
+minimal_base_uninstall_packages_extra: []
