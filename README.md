@@ -13,6 +13,12 @@ For now this role targets recent releases of Debian and Ubuntu.
 * Debian or Ubuntu target system
 * Ansible 2.1 or greater
 
+## Installation
+
+Install this role from Ansible Galaxy with
+
+    ansible-galaxy install mtmiller.minimal-base
+
 ## Example Playbook
 
 This is an example playbook showing how to use this role.
