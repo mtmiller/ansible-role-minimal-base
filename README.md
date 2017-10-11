@@ -2,6 +2,7 @@
 
 [![Build Status](https://travis-ci.org/mtmiller/ansible-role-minimal-base.svg?branch=master)](https://travis-ci.org/mtmiller/ansible-role-minimal-base)
 [![Ansible Role](https://img.shields.io/ansible/role/21088.svg)](https://galaxy.ansible.com/mtmiller/minimal-base)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 
 This is a simple Ansible role that can be used early to set up a minimal base
 system to start from.
