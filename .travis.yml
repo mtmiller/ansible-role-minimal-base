@@ -26,12 +26,14 @@ services:
   - docker
 
 before_install:
-  - docker build -f travis/Dockerfile.${Distribution}-${Release} -t ${Distribution}-${Release}:ansible travis
-  - docker run -d --privileged -v /sys/fs/cgroup:/sys/fs/cgroup:ro -v ${PWD}:${ANSIBLE_ROLE_DIR}:ro ${Distribution}-${Release}:ansible > /tmp/container
+  - export TAG=$( echo ${Distribution}-${Release}:ansible | tr A-Z a-z )
+  - docker build -f travis/Dockerfile.${Distribution}-${Release} -t ${TAG} travis
+  - docker run -d --privileged -v /sys/fs/cgroup:/sys/fs/cgroup:ro -v ${PWD}:${ANSIBLE_ROLE_DIR}:ro ${TAG} > /tmp/container
 
 script:
-  - docker exec $( cat /tmp/container ) env ANSIBLE_FORCE_COLOR=1 ansible-playbook -v ${ANSIBLE_ROLE_DIR}/travis/test.yml --syntax-check
-  - docker exec $( cat /tmp/container ) env ANSIBLE_FORCE_COLOR=1 ansible-playbook -v ${ANSIBLE_ROLE_DIR}/travis/test.yml
+  - export CONTAINER=$( cat /tmp/container )
+  - docker exec ${CONTAINER} env ANSIBLE_FORCE_COLOR=1 ansible-playbook -v ${ANSIBLE_ROLE_DIR}/travis/test.yml --syntax-check
+  - docker exec ${CONTAINER} env ANSIBLE_FORCE_COLOR=1 ansible-playbook -v ${ANSIBLE_ROLE_DIR}/travis/test.yml
 
 notifications:
   webhooks: https://galaxy.ansible.com/api/v1/notifications/
