@@ -12,6 +12,8 @@ env:
     - Distribution: Debian
       Release: stretch
     - Distribution: Debian
+      Release: buster
+    - Distribution: Debian
       Release: sid
     - Distribution: Ubuntu
       Release: trusty
