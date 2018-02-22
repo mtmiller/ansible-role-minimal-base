@@ -2,12 +2,36 @@
 language: python
 python: 2.7
 
-install:
-  - pip install ansible
-  - printf '[defaults]\nroles_path = ../\n' > ansible.cfg
+env:
+  global:
+    - ANSIBLE_ROLE_NAME: ansible-role-minimal-base
+    - ANSIBLE_ROLE_DIR: /etc/ansible/roles/${ANSIBLE_ROLE_NAME}
+  matrix:
+    - Distribution: Debian
+      Release: jessie
+    - Distribution: Debian
+      Release: stretch
+    - Distribution: Debian
+      Release: sid
+    - Distribution: Ubuntu
+      Release: trusty
+    - Distribution: Ubuntu
+      Release: xenial
+    - Distribution: Ubuntu
+      Release: artful
+    - Distribution: Ubuntu
+      Release: bionic
+
+services:
+  - docker
+
+before_install:
+  - docker build -f travis/Dockerfile.${Distribution}-${Release} -t ${Distribution}-${Release}:ansible travis
+  - docker run -d --privileged -v /sys/fs/cgroup:/sys/fs/cgroup:ro -v ${PWD}:${ANSIBLE_ROLE_DIR}:ro ${Distribution}-${Release}:ansible > /tmp/container
 
 script:
-  - ansible-playbook -i tests/inventory tests/test.yml --syntax-check
+  - docker exec $( cat /tmp/container ) env ANSIBLE_FORCE_COLOR=1 ansible-playbook -v ${ANSIBLE_ROLE_DIR}/travis/test.yml --syntax-check
+  - docker exec $( cat /tmp/container ) env ANSIBLE_FORCE_COLOR=1 ansible-playbook -v ${ANSIBLE_ROLE_DIR}/travis/test.yml
 
 notifications:
   webhooks: https://galaxy.ansible.com/api/v1/notifications/
